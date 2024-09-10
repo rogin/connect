@@ -8,6 +8,7 @@ donkey/donkey-test
 .sonar
 **/junit-reports
 **/code-coverage-reports
+.vscode/settings.json
 
 # /client/
 /client/logs
@@ -24,6 +25,7 @@ donkey/donkey-test
 /client/nbdist
 /client/test_classes
 /client/junit-reports
+/client/.project
 
 # /client/lib/
 /client/lib/*-shared.jar
