@@ -98,15 +98,6 @@ public class VMRouterEnhanced extends VMRouter {
 
         @see #routeMessage(String, Object, Map, Collection)
     */
-    public Response routeMessage(String channelName, Object message) {
-        return routeMessage(channelName, message, null, null);
-    }
-
-    /**
-        Calls to {@link #routeMessage(String, Object, Map, Collection)}
-
-        @see #routeMessage(String, Object, Map, Collection)
-    */
     public Response routeMessage(String channelName, Object message, Map<String, Object> sourceMap) {
         return routeMessage(channelName, message, sourceMap, null);
     }
