@@ -42,7 +42,6 @@ import com.mirth.connect.server.userutil.DestinationSet;
 import com.mirth.connect.server.userutil.ImmutableResponse;
 import com.mirth.connect.server.userutil.SourceMap;
 import com.mirth.connect.server.userutil.VMRouter;
-import com.mirth.connect.server.userutil.VMRouterEnhanced;
 import com.mirth.connect.server.util.GlobalChannelVariableStoreFactory;
 import com.mirth.connect.server.util.GlobalVariableStore;
 import com.mirth.connect.server.util.TemplateValueReplacer;
@@ -169,13 +168,13 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
         add("router", scope, new VMRouter());
     }
 
-    private static void addRouterEnhanced(Scriptable scope, String channelId, Long messageId, Map<String, Object> sourceMap) {
+    private static void addRouterEnhancement(Scriptable scope, String channelId, Long messageId, Map<String, Object> sourceMap) {
         if(isEnhancedRoutingEnabled) {
             if(sourceMap == null) {
                 sourceMap = Collections.emptyMap();
             }
 
-            add("router", scope, new VMRouterEnhanced(channelId, messageId, new SourceMap(Collections.unmodifiableMap(sourceMap))));
+            add("router", scope, new VMRouter(channelId, messageId, new SourceMap(Collections.unmodifiableMap(sourceMap))));
         }
     }
 
@@ -269,7 +268,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
         add("mirth_attachments", scope, attachments);
         add("binary", scope, isBinary);
 
-        addRouterEnhanced(scope, channelId, message.getOriginalMessageId(), message.getSourceMap());
+        addRouterEnhancement(scope, channelId, message.getOriginalMessageId(), message.getSourceMap());
 
         return scope;
     }
@@ -283,7 +282,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
         addRawMessage(scope, message);
         addConnectorMessage(scope, connectorMessage);
 
-        addRouterEnhanced(scope, channelId, connectorMessage.getMessageId(), connectorMessage.getSourceMap());
+        addRouterEnhancement(scope, channelId, connectorMessage.getMessageId(), connectorMessage.getSourceMap());
 
         return scope;
     }
@@ -297,7 +296,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
         addStatusValues(scope);
         addMessage(scope, message);
 
-        addRouterEnhanced(scope, channelId, message.getMessageId(), message.getMergedConnectorMessage().getSourceMap());
+        addRouterEnhancement(scope, channelId, message.getMessageId(), message.getMergedConnectorMessage().getSourceMap());
 
         return scope;
     }
@@ -312,7 +311,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
         addStatusValues(scope);
         add("response", scope, response);
 
-        addRouterEnhanced(scope, channelId, message.getMessageId(), message.getMergedConnectorMessage().getSourceMap());
+        addRouterEnhancement(scope, channelId, message.getMessageId(), message.getMergedConnectorMessage().getSourceMap());
 
         return scope;
     }
@@ -327,7 +326,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
         add("template", scope, template);
         add("phase", scope, phase);
 
-        addRouterEnhanced(scope, null, message.getMessageId(), message.getSourceMap());
+        addRouterEnhancement(scope, null, message.getMessageId(), message.getSourceMap());
 
         return scope;
     }
@@ -343,7 +342,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
         addStatusValues(scope);
         add("template", scope, template);
 
-        addRouterEnhanced(scope, null, message.getMessageId(), message.getSourceMap());
+        addRouterEnhancement(scope, null, message.getMessageId(), message.getSourceMap());
 
         return scope;
     }
@@ -371,7 +370,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
     public static Scriptable getUndeployScope(ContextFactory contextFactory, Object logger, String channelId, String channelName) {
         Scriptable scope = getBasicScope(getContext(contextFactory), logger, channelId, channelName);
 
-        addRouterEnhanced(scope, channelId, null, null);
+        addRouterEnhancement(scope, channelId, null, null);
 
         return scope;
     }
@@ -391,7 +390,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
     public static Scriptable getMessageReceiverScope(ContextFactory contextFactory, Object logger, String channelId, String channelName) {
         Scriptable scope = getBasicScope(getContext(contextFactory), logger, channelId, channelName);
 
-        addRouterEnhanced(scope, channelId, null, null);
+        addRouterEnhancement(scope, channelId, null, null);
 
         return scope;
     }
@@ -404,7 +403,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
         Scriptable scope = getBasicScope(getContext(contextFactory), logger, channelId, message.getChannelName());
         addConnectorMessage(scope, message);
 
-        addRouterEnhanced(scope, channelId, message.getMessageId(), message.getSourceMap());
+        addRouterEnhancement(scope, channelId, message.getMessageId(), message.getSourceMap());
 
         return scope;
     }
@@ -418,7 +417,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
         addConnectorMessage(scope, message);
         addStatusValues(scope);
 
-        addRouterEnhanced(scope, channelId, message.getMessageId(), message.getSourceMap());
+        addRouterEnhancement(scope, channelId, message.getMessageId(), message.getSourceMap());
 
         return scope;
     }
@@ -438,7 +437,7 @@ public class JavaScriptScopeUtil implements IJavaScriptScopeUtil {
             addChannel(scope, channelId, channelName);
         }
 
-        addRouterEnhanced(scope, channelId, null, null);
+        addRouterEnhancement(scope, channelId, null, null);
 
         return scope;
     }
