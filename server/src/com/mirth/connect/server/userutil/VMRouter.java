@@ -279,8 +279,8 @@ public class VMRouter {
                 messageSourceMap = Collections.emptyMap();
             }
 
-            List<String> sourceChannelIds = envLookupAsList("sourceChannelIds", "sourceChannelId");
-            List<String> sourceMessageIds = envLookupAsList("sourceMessageIds", "sourceMessageId");
+            List<String> sourceChannelIds = lookupAsList("sourceChannelIds", "sourceChannelId");
+            List<String> sourceMessageIds = lookupAsList("sourceMessageIds", "sourceMessageId");
 
             HashMap<String,Object> newSourceMap = new HashMap<String,Object>(messageSourceMap);
             String channelId = this.channelId;
@@ -305,7 +305,7 @@ public class VMRouter {
          * @param secondary secondary lookup key to return an Object
          * @return a List containing the first non-null lookup value, else an empty List
          */
-        private List<String> envLookupAsList(String primary, String secondary) {
+        private List<String> lookupAsList(String primary, String secondary) {
             List<String> result = new ArrayList<String>();
 
             Object primaryValue = lookupInEnvSourceMap(primary);
